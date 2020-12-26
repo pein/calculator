@@ -31,21 +31,32 @@ function addDecimal() {
   }
 }
 
+// Calculate first and second value depending on operator
+const calculate = {
+  "/": (firstNumber, secondNumber) => firstValue / secondNumber,
+  "*": (firstNumber, secondNumber) => firstValue * secondNumber,
+  "+": (firstNumber, secondNumber) => firstValue + secondNumber,
+  "-": (firstNumber, secondNumber) => firstValue - secondNumber,
+  "=": (firstNumber, secondNumber) => secondNumber,
+};
 function useOperator(operator) {
   const currentValue = Number(calculatorDisplay.textContent);
   //   To prevent ;ultiple operators
   if (operatorValue && awaitingNextValue) {
+    operatorValue = operator;
     return;
   }
   // Assign firstvlue if no value
   if (!firstValue) {
     firstValue = currentValue;
   } else {
+    const calculation = calculate[operatorValue](firstValue, currentValue);
+    calculatorDisplay.textContent = calculation;
+    firstValue = calculation;
   }
   //   Ready for next value
   awaitingNextValue = true;
   operatorValue = operator;
-  console.log(currentValue, operator);
 }
 
 // Add event listeners
