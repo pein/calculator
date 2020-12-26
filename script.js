@@ -33,6 +33,10 @@ function addDecimal() {
 
 function useOperator(operator) {
   const currentValue = Number(calculatorDisplay.textContent);
+  //   To prevent ;ultiple operators
+  if (operatorValue && awaitingNextValue) {
+    return;
+  }
   // Assign firstvlue if no value
   if (!firstValue) {
     firstValue = currentValue;
